@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Get";
+}
+
+<h2>Get</h2>
+
+@using (Html.BeginForm("Get", "Case", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for=" id"> Case id</label>
+        <input type="number" class="form-control" id="id" name="id" required="required" />
+    </div>
+    <button type="submit" class="btn btn default"> Submit</button>
+
+}
