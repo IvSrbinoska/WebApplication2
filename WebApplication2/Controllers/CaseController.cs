@@ -90,7 +90,7 @@ namespace WebApplication2.Controllers
         }
 
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<ActionResult> NewCase(Case myCase)
         {
             ViewBag.Message = "Your case page";
@@ -114,9 +114,8 @@ namespace WebApplication2.Controllers
         public ActionResult New(Case myCase)
         {
             return View(myCase);
-        }
+        }*/
 
-        /*[HttpPost]
         static async Task<Case> CreateCaseAsync(Case mycase)
         {
             using (var client = new HttpClient())
@@ -138,12 +137,15 @@ namespace WebApplication2.Controllers
             }
         }
         
+        [HttpPost]
         public async Task<ActionResult> New(Case mycase)
         {
             ViewBag.Message = "Your Case page!";
+            // create new
+
             ViewBag.myCase = await CreateCaseAsync(mycase);
             return View("~/Views/Case/New.cshtml", mycase);
-        }*/
+        }
 
 
         public async Task<ActionResult> Edit(Case mycase)
