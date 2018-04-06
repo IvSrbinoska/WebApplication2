@@ -14,6 +14,7 @@ namespace WebApplication2.Controllers
     public class CaseController : Controller
     {
         //moj test
+        //moj test2
 
         // GET: Case
         public ActionResult Index()
