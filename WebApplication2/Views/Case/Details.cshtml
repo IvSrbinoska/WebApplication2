@@ -1,0 +1,42 @@
+﻿@model WebApplication2.Models.Case
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Case</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.caseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.caseNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kind)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kind)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerNumber)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

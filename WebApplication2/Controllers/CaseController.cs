@@ -88,15 +88,11 @@ namespace WebApplication2.Controllers
             return View();
         }
 
-        private async Task<dynamic> createCaseAsync(Case myCase)
-        {
-            return await Task.FromResult<dynamic>(1);
-        }
 
         [HttpPost]
         public async Task<ActionResult> NewCase(Case myCase)
         {
-          ViewBag.Message = "Your case page";
+            ViewBag.Message = "Your case page";
             // call web API za da se kreira objektot
             using (var client = new HttpClient())
             {
@@ -108,17 +104,122 @@ namespace WebApplication2.Controllers
                 {
                     return View("~/Views/Case/New.cshtml", myCase);
                 }
-          
-            }
 
-            //ViewBag.myCase = await createCaseAsync(myCase);
+            }
             return View("~/Views/Case/New.cshtml");
         }
-
         
+
         public ActionResult New(Case myCase)
         {
             return View(myCase);
         }
+
+        /*[HttpPost]
+        static async Task<Case> CreateCaseAsync(Case mycase)
+        {
+            using (var client = new HttpClient())
+            {
+                
+
+                client.BaseAddress = new Uri("http://localhost:26815/");
+
+                Case cases = null;
+
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/case/", mycase);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    cases = JsonConvert.DeserializeObject<Case>(jsonString);
+
+                }
+                return cases;
+            }
+        }
+        
+        public async Task<ActionResult> New(Case mycase)
+        {
+            ViewBag.Message = "Your Case page!";
+            ViewBag.myCase = await CreateCaseAsync(mycase);
+            return View("~/Views/Case/New.cshtml", mycase);
+        }*/
+
+
+        public async Task<ActionResult> Edit(Case mycase)
+        {
+            //var mycase =  await GetByCaseIDAsync(id);
+            // ViewBag.myCase = myCase;
+
+            return View(mycase);
+        }
+
+
+
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(Case mycase, int id)
+        {
+            int idd = mycase.ID;
+
+            var myCase = await EditCaseAsync(idd, mycase);
+
+            // ViewBag.myCase = myCase;
+
+            return View("~/Views/Case/Details.cshtml", mycase);
+        }
+
+        static async Task<Case> EditCaseAsync(int id, Case mycase)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:/26815");
+
+                Case cases = null;
+
+                HttpResponseMessage response = await client.PutAsJsonAsync("api/case/" + id, mycase);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    cases = JsonConvert.DeserializeObject<Case>(jsonString);
+                }
+                return cases;
+            }
+        }
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            var myCase = await GetCaseByID(id);
+            var mycase = await DeleteCaseAsync(myCase);
+            // return View(mycase);
+            return RedirectToAction("AllCases");
+        }
+
+        static async Task<Case> DeleteCaseAsync(Case mycase)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:/26815");
+                Case cases = null;
+                HttpResponseMessage response = await client.DeleteAsync("api/case/" + mycase.ID);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    cases = JsonConvert.DeserializeObject<Case>(jsonString);
+                }
+                return cases;
+            }
+        }
+        //test
+        public async Task<ActionResult> Details(int id)
+        { 
+            var myCase = await GetCaseByID(id);
+
+            //ViewBag.myCase = myCase;
+
+            return View("~/Views/Case/Details.cshtml", myCase);
+
+        }
+
     }
 }
